@@ -20,7 +20,7 @@ async def shorten(session: SessionDeps, url: UrlCreate):
     )
 
 
-@app.get("/{short_code}")
+@app.get("/{short_url:path}")
 async def redirect(session: SessionDeps, short_url: str):
     url = get_url(session=session, short_url=short_url)
     if not url:

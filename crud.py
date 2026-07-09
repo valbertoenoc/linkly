@@ -28,7 +28,7 @@ def create_url(*, session: Session, url_create: UrlCreate) -> Url:
 
 
 def get_url(*, session: Session, short_url: str) -> Url:
-    statement = select(Url).where(col(short_url) == short_url)
+    statement = select(Url).where(col(Url.short_url) == short_url)
     url = session.exec(statement).one()
 
     return url
