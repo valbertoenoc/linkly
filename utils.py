@@ -1,5 +1,7 @@
 import string
 
+from snowflake import SnowflakeGenerator
+
 # Define the alphabet: 0-9, a-z, A-Z (or any order, but must be consistent)
 BASE62 = string.digits + string.ascii_lowercase + string.ascii_uppercase
 
@@ -28,3 +30,8 @@ def b62_decode(string: str, alphabet=BASE62) -> int:
         num += alphabet.index(char) * (base**power)
         idx += 1
     return num
+
+
+def generate_id(machine_id: int) -> int | None:
+    gen = SnowflakeGenerator(machine_id)
+    return next(gen)
