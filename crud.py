@@ -4,18 +4,16 @@ from sqlmodel import Session, col, select
 
 from models import Url, UrlCreate
 from utils import b62_encode, generate_id
-
-MACHINE_ID = os.getenv("MACHINE_ID", 1)
-BASE_URL = os.getenv("BASE_URL")
+from config import settings
 
 
 def create_url(*, session: Session, url_create: UrlCreate) -> Url:
-    sf_id: int | None = generate_id(int(MACHINE_ID))
+    sf_id: int | None = generate_id(settings.MACHINE_ID)
     if not sf_id:
         raise
 
     short_code = b62_encode(sf_id)
-    short_url = f"{BASE_URL}/{short_code}"
+    short_url = f"{settings.BASE_URL}/{short_code}"
 
     new_url = Url(
         short_url=short_url,
