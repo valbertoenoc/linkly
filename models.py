@@ -6,7 +6,7 @@ from sqlmodel import Field, SQLModel
 class Url(SQLModel, table=True):
     short_url: str = Field(primary_key=True)
     long_url: str
-    created_at: datetime = Field(default=datetime.now())
+    created_at: datetime = Field(default_factory=datetime.now)
     click_count: int = 0
 
 

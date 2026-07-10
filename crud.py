@@ -1,14 +1,15 @@
-import os
 
-from sqlmodel import Session, col, select
+from sqlmodel import col, select
+from sqlmodel.ext.asyncio.session import AsyncSession
+
 
 from models import Url, UrlCreate
 from utils import b62_encode, generate_id
 from config import settings
 
 
-def create_url(*, session: Session, url_create: UrlCreate) -> Url:
-    sf_id: int | None = generate_id(settings.MACHINE_ID)
+async def create_url(*, session: AsyncSession, url_create: UrlCreate) -> Url:
+    sf_id: int | None = generate_id()
     if not sf_id:
         raise
 
@@ -21,14 +22,15 @@ def create_url(*, session: Session, url_create: UrlCreate) -> Url:
     )
 
     session.add(new_url)
-    session.commit()
-    session.refresh(new_url)
+    await session.commit()
+    await session.refresh(new_url)
 
     return new_url
 
 
-def get_url(*, session: Session, short_url: str) -> Url:
+async def get_url(*, session: AsyncSession, short_url: str) -> Url | None:
     statement = select(Url).where(col(Url.short_url) == short_url)
-    url = session.exec(statement).one()
+    results = await session.exec(statement)
+    url = results.first()
 
     return url

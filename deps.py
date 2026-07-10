@@ -1,14 +1,17 @@
-from typing import Annotated, Generator
+from typing import Annotated, AsyncGenerator
 
 from fastapi import Depends
-from sqlmodel import Session
+from sqlmodel.ext.asyncio.session import AsyncSession
 
 from db import engine
 
 
-def get_db() -> Generator[Session]:
-    with Session(engine) as session:
+# def get_db() -> Generator[Session]:
+#     with Session(engine) as session:
+#         yield session
+
+async def get_db() -> AsyncGenerator[AsyncSession, None]:
+    async with AsyncSession(engine, expire_on_commit=False) as session:
         yield session
 
-
-SessionDeps = Annotated[Session, Depends(get_db)]
+SessionDeps = Annotated[AsyncSession, Depends(get_db)]

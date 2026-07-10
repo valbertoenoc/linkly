@@ -10,7 +10,7 @@ app = FastAPI()
 
 @app.post("/shorten", response_model=UrlPublic)
 async def shorten(session: SessionDeps, url: UrlCreate):
-    new_url = create_url(session=session, url_create=url)
+    new_url = await create_url(session=session, url_create=url)
 
     return UrlPublic(
         click_count=new_url.click_count,
@@ -22,7 +22,8 @@ async def shorten(session: SessionDeps, url: UrlCreate):
 
 @app.get("/{short_url:path}")
 async def redirect(session: SessionDeps, short_url: str):
-    url = get_url(session=session, short_url=short_url)
+    url = await get_url(session=session, short_url=short_url)
+    print(url)
     if not url:
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 

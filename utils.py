@@ -1,10 +1,12 @@
 import string
 
 from snowflake import SnowflakeGenerator
+from config import settings
 
 # Define the alphabet: 0-9, a-z, A-Z (or any order, but must be consistent)
 BASE62 = string.digits + string.ascii_lowercase + string.ascii_uppercase
 
+_gen = SnowflakeGenerator(settings.MACHINE_ID)
 
 def b62_encode(num: int, alphabet=BASE62) -> str:
     """Encode a positive number into Base62."""
@@ -32,6 +34,5 @@ def b62_decode(string: str, alphabet=BASE62) -> int:
     return num
 
 
-def generate_id(machine_id: int) -> int | None:
-    gen = SnowflakeGenerator(machine_id)
-    return next(gen)
+def generate_id() -> int | None:
+    return next(_gen, None)
