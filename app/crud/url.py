@@ -2,10 +2,9 @@
 from sqlmodel import col, select
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-
-from models import Url, UrlCreate
-from utils import b62_encode, generate_id
-from config import settings
+from app.models.url import Url, UrlCreate
+from app.core.config import settings
+from app.utils import b62_encode, generate_id
 
 
 async def create_url(*, session: AsyncSession, url_create: UrlCreate) -> Url:

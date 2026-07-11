@@ -1,9 +1,9 @@
 from fastapi import FastAPI, status
 from fastapi.responses import RedirectResponse, Response
 
-from crud import create_url, get_url
-from deps import SessionDeps
-from models import UrlCreate, UrlPublic
+from app.crud.url import create_url, get_url
+from app.deps import SessionDeps
+from app.models.url import UrlCreate, UrlPublic
 
 app = FastAPI()
 

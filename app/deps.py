@@ -3,7 +3,7 @@ from typing import Annotated, AsyncGenerator
 from fastapi import Depends
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-from db import engine
+from app.core.db import engine
 
 
 # def get_db() -> Generator[Session]:

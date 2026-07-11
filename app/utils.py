@@ -1,7 +1,7 @@
 import string
 
 from snowflake import SnowflakeGenerator
-from config import settings
+from app.core.config import settings
 
 # Define the alphabet: 0-9, a-z, A-Z (or any order, but must be consistent)
 BASE62 = string.digits + string.ascii_lowercase + string.ascii_uppercase
