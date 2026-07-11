@@ -1,11 +1,18 @@
 from fastapi import FastAPI, status
 from fastapi.responses import RedirectResponse, Response
+from contextlib import asynccontextmanager
 
 from app.crud.url import create_url, get_url
 from app.deps import SessionDeps
 from app.models.url import UrlCreate, UrlPublic
+from app.core.db import init_db
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await init_db()
+    yield
+
+app = FastAPI(lifespan=lifespan)
 
 
 @app.post("/shorten", response_model=UrlPublic)
