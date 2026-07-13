@@ -2,7 +2,9 @@
 
 ## Description
 
-An URL that you can self host.
+An URL Shortener that you can self host. A project that started as a learning tool, but evolved to be a production ready URL Shortener with analytics. Soon to have more features. 
+It can be used for teaching purposes, or self hosting for you URL Shortening needs. 
+It was designed with scalibity and development experience in mind.
 
 ## Motivation
 
